@@ -109,7 +109,7 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 
-//Event Handler
+//Event Handlers
 let currentAccount;
 
 const updateUI = function (acc) {
@@ -156,8 +156,23 @@ btnTransfer.addEventListener("Click", function (e) {
     receiverAcc.movements.push(amount);
 
     // Update UI
-    updateUI(currentAccount);
+       updateUI(currentAccount);
   }
+});
+
+btnClose.addEventListener("click", function(e){
+  e.preventDefault();
+
+  
+
+  if(Number(inputClosePin.value) === currentAccount.pin   && inputCloseUsername.value === currentAccount.username   ){
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    accounts.splice(index, 1);
+
+    containerApp.style.opacity = 0;
+  }
+
+  inputClosePin.value = inputCloseUsername.value = "";
 });
 
 
