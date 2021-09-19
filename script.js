@@ -160,13 +160,26 @@ btnTransfer.addEventListener("Click", function (e) {
   }
 });
 
-btnClose.addEventListener("click", function(e){
+btnLoan.addEventListener("click", function (e) {
   e.preventDefault();
 
-  
+  const amount = Number(inputLoanAmount.value);
 
-  if(Number(inputClosePin.value) === currentAccount.pin   && inputCloseUsername.value === currentAccount.username   ){
-    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+  if (amount > 0 && currentAccount.movements.some((mov) => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = "";
+});
+
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex((acc) => acc.username === currentAccount.username);
     accounts.splice(index, 1);
 
     containerApp.style.opacity = 0;
